@@ -1,13 +1,18 @@
 package springproject.springfb.user;
 
+import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Data;
 import lombok.Getter;
 
 @Getter
+@Data
+@Entity(name="user")
 public final class User {
     @NotNull(message = "학번을 기입해주세요")
     private final int studentId;
+
     @NotNull(message = "이름을 기입해주세요")
     private final String name;
     @NotNull(message = "전화번호를 기입해주세요")
@@ -23,8 +28,10 @@ public final class User {
         this.phone = phone;
         this.department = department;
     }
+
     public static User of(int studentId, String name, String phone, String department){
         return new User(studentId,name,phone,department);
     }
+
 
 }
