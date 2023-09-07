@@ -8,6 +8,7 @@ group = 'spring-project'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -24,8 +25,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-web-services'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-    testImplementation 'junit:junit:4.13.1'
-    compileOnly 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
