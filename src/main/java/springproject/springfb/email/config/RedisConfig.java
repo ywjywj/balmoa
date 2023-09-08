@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 @Configuration
-@EnableRedisRepositories
+@EnableRedisRepositories(basePackages = {"springproject.springfb.email.config"})
 public class RedisConfig {
     @Value("${spring.redis.host}")
     private String redisHost;

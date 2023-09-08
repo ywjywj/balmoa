@@ -11,11 +11,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/balmoa")
 public class UserController {
-    @Autowired
-    private EmailServiceImpl emailService;
+//    @Autowired
+//    private EmailServiceImpl emailService;
 
     private final UserService userService;
-    @Autowired
+//    @Autowired
     private UserRepository userRepository;
 
 //    public UserController(EmailServiceImpl emailService) {
