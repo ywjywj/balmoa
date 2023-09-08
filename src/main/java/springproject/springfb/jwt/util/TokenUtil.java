@@ -1,9 +1,9 @@
 package springproject.springfb.jwt.util;
 
 import io.jsonwebtoken.*;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import springproject.springfb.jwt.domain.Token;
 import springproject.springfb.user.User;
@@ -17,11 +17,15 @@ import java.util.*;
 @Slf4j
 @Component
 public class TokenUtil {
+
+
     private final String secretKey;
 
-    public TokenUtil( @Value("{spring.jwt.secret}") String secretKey){
+    public TokenUtil(@Value("${spring.jwt.secret}") String secretKey) {
+        log.debug("validation : {}",secretKey);
         this.secretKey = secretKey;
     }
+
 
 
     public Token createToken(User user){
