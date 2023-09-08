@@ -16,19 +16,8 @@ public class UserService {
 
 
    private final UserRepository userRepository;
-//    @Autowired
-////    @Qualifier(value = "entityManager")
-////    EntityManager manager;
-//    private final UserRepositoryImpl userRepository;
-//
-//    @Autowired
-//    public UserService(UserRepositoryImpl userRepository) {
-//        this.userRepository = userRepository;
-//    }
 
     public List<User> findAll() {
-//        List<User> users = new ArrayList<>();
-//        userRepository.findAll().forEach(e-> users.add(e));
         return userRepository.findAll();
     }
     public User save(User user){
