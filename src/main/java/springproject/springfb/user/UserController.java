@@ -14,18 +14,7 @@ import java.util.List;
 @RequestMapping(value="/balmoa")
 @RequiredArgsConstructor
 public class UserController {
-<<<<<<< HEAD
-//    @Autowired
-//    private EmailServiceImpl emailService;
-
     private final UserService userService;
-//    @Autowired
-    private UserRepository userRepository;
-=======
-
-
-    private final UserService userService;
->>>>>>> wonjun
 
     @GetMapping("/")
     public ResponseEntity<List<User>> GetAllUsers(){
