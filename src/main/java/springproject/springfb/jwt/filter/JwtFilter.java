@@ -30,7 +30,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 "/balmoa/test"
         );
 
-        if(list.contains(request.getRequestURI())) {
+        if(!list.contains(request.getRequestURI())) {
             filterChain.doFilter(request,response);
             return;
         }
