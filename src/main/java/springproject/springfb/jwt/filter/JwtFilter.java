@@ -11,7 +11,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import springproject.springfb.jwt.util.TokenUtil;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -23,25 +22,29 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        log.info("[Request Url] : {}", request.getRequestURI());
-        List<String> list = Arrays.asList(
-                "/balmoa/test"
+        log.info("[Request URL] : {}", request.getRequestURI());
+        List<String> list = List.of(
+                "/swagger-ui/",
+                "/v3/api-docs/",
+                "/balmoa/mail"
         );
+        boolean flag = list.stream().anyMatch(url -> request.getRequestURI().startsWith(url));
+        // 현재 URL 이 LIST 안에 포함되있는걸로 시작되나?
+        if(flag) {
+            filterChain.doFilter(request,response);
+            return;
+        }
 
-        if(list.contains(request.getRequestURI())) {
-            String header = request.getHeader("Authorization");
-            log.info("[JwtFilter] : {}",header);
-            if(header != null && !header.equalsIgnoreCase("")){
-                if(header.startsWith("Bearer")){
-                    String access_token = header.split(" ")[1];
+        String header = request.getHeader("Authorization");
+        log.info("[JwtFilter] : {}",header);
+        if(header != null && !header.equalsIgnoreCase("")){
+            if(header.startsWith("Bearer")){
+                String access_token = header.split(" ")[1];
 
-                    if(tokenUtil.isValidToken(access_token)){
-                        filterChain.doFilter(request,response);
-                    }
+                if(tokenUtil.isValidToken(access_token)){
+                    filterChain.doFilter(request,response);
                 }
             }
         }
-
-        filterChain.doFilter(request,response);
     }
 }

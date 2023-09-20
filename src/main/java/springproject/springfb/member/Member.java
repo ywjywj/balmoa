@@ -20,7 +20,7 @@ public class Member {
     private int memberId;
 
     @NotNull(message = "학번을 기입해주세요")
-    private int studentId;
+    private String studentId;
 
     @NotNull(message = "이름을 기입해주세요")
     private String name;

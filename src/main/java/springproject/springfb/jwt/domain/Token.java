@@ -15,12 +15,8 @@ import java.io.Serializable;
 public class Token implements Serializable {
 
     @Id
-    private Long tokenId;
+    private String tokenId;
     private String accessToken;
-    private String refreshToken;
+    // private String refreshToken;
 
-    public Token(String accessToken, String refreshToken) {
-        this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
-    }
 }

@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import springproject.springfb.jwt.domain.Token;
-import springproject.springfb.member.Member;
 
 
 import javax.crypto.spec.SecretKeySpec;
@@ -27,23 +26,25 @@ public class TokenUtil {
 
 
 
-    public Token createToken(Member member){
+    public Token createToken(String id){
+
         //payload 부분에 학번을 기입하는게 괜찮을까? 아님 이 부분을 위해서 member_id를 사용해서 할까? 논의해보자.
         String access_token = Jwts.builder()
                 .setHeader(createHeader())
                 .setClaims(createClaims())
-                .setSubject(String.valueOf(member.getStudentId()))
+                .setSubject(id)
                 .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60)) // 토큰 만료 시간
                 .signWith(createSignature(),SignatureAlgorithm.HS256)
                 .compact();
 
+        /*
         String refresh_token = Jwts.builder()
-                .setSubject(String.valueOf(member.getStudentId()))
+                .setSubject(email)
                 .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60*5))
                 .signWith(createSignature(),SignatureAlgorithm.HS256)
                 .compact();
-
-        return new Token(access_token,refresh_token);
+        */
+        return new Token(id,access_token);
 
     }
 
