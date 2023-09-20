@@ -2,6 +2,7 @@ package springproject.springfb.email;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -10,12 +11,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MailService {
 
     private final JavaMailSender javaMailSender;
     private final RedisUtil redisUtil;
-//    private static final String FROM_ADDRESS = "vcfdxzsa12@gmail.com";
 
     private String createdCode() {
         int leftLimit = 48; // number '0'
@@ -44,6 +45,7 @@ public class MailService {
         simpleMailMessage.setSubject("Test Subject");
 //        simpleMailMessage.setFrom("풋살장 예약 어플");
         simpleMailMessage.setText("풋살장 인증 코드 : "+ code);
+
         redisUtil.setDataExpire(email,code,60*30L);
         return simpleMailMessage;
     }
@@ -62,7 +64,6 @@ public class MailService {
 //    }
     public Boolean verifyEmailCode(String email, String code) {
         String codeFoundByEmail = redisUtil.getData(email);
-        System.out.println(codeFoundByEmail);
         if (codeFoundByEmail == null) {
             return false;
         }

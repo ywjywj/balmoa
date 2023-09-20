@@ -6,14 +6,17 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Tag(name= "users", description = "예약 기능 API")
 @RestController
 @RequestMapping(value="/balmoa/users")
@@ -32,7 +35,7 @@ public class MemberController {
         return ResponseEntity.ok(members);
     }
 
-    @Operation(description = "예약 신청 API")
+    @Operation(description = "예약 신청 API",security = @SecurityRequirement(name = "bearer-key"))
     @ApiResponses({
             @ApiResponse(responseCode = "200",description = "success",
                     content = @Content(schema = @Schema(implementation = Member.class))),
@@ -41,7 +44,8 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping("/save")
-    public ResponseEntity<Member> save(Member member){
+    public ResponseEntity<Member> save(@RequestBody Member member){
+        log.debug("[fuck] : {}",member);
         return new ResponseEntity<Member>(memberService.save(member), HttpStatus.OK);
     }
 }

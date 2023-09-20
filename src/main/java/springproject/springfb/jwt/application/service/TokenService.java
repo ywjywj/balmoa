@@ -10,8 +10,8 @@ import springproject.springfb.jwt.domain.Token;
 public class TokenService {
 
     private final TokenPort tokenPort;
-    public Token saveToken(final Token token){
-        return tokenPort.saveToken(token);
+    public Token saveToken(final String id){
+        return tokenPort.saveToken(id);
     }
 
 }
