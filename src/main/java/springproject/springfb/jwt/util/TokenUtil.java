@@ -29,7 +29,7 @@ public class TokenUtil {
 
 
     public Token createToken(User user){
-
+        //payload 부분에 학번을 기입하는게 괜찮을까? 아님 이 부분을 위해서 member_id를 사용해서 할까? 논의해보자.
         String access_token = Jwts.builder()
                 .setHeader(createHeader())
                 .setClaims(createClaims())
