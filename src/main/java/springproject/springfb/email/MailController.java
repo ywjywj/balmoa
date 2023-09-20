@@ -18,7 +18,8 @@ public class MailController {
 
     @PostMapping("/mail")
     public ResponseEntity<String> sendEmailPath(@RequestBody HashMap<String,String> map) {
-        mailService.sendMail(map.get("email"));
+        String email = map.get("id")+"@st.yc.ac.kr";
+        mailService.sendMail(email);
         return ResponseEntity.ok("이메일을 확인하세요");
     }
 
