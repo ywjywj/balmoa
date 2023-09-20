@@ -8,6 +8,14 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
+
+    @Bean
+    public GroupedOpenApi mailAPI(){
+        return GroupedOpenApi.builder()
+                .group("mail")
+                .pathsToMatch("/balmoa/mail/**")
+                .build();
+    }
     @Bean
     public GroupedOpenApi userAPI(){
         return GroupedOpenApi.builder()

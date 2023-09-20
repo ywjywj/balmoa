@@ -25,26 +25,23 @@ public class JwtFilter extends OncePerRequestFilter {
 
         log.info("[Request Url] : {}", request.getRequestURI());
         List<String> list = Arrays.asList(
-                "/balmoa/reserve/mail",
-                "/balmoa/reserve/mail/auth",
                 "/balmoa/test"
         );
 
-        if(!list.contains(request.getRequestURI())) {
-            filterChain.doFilter(request,response);
-            return;
-        }
+        if(list.contains(request.getRequestURI())) {
+            String header = request.getHeader("Authorization");
+            log.info("[JwtFilter] : {}",header);
+            if(header != null && !header.equalsIgnoreCase("")){
+                if(header.startsWith("Bearer")){
+                    String access_token = header.split(" ")[1];
 
-        String header = request.getHeader("Authorization");
-        log.info("[JwtFilter] : {}",header);
-        if(header != null && !header.equalsIgnoreCase("")){
-            if(header.startsWith("Bearer")){
-                String access_token = header.split(" ")[1];
-
-                if(tokenUtil.isValidToken(access_token)){
-                    filterChain.doFilter(request,response);
+                    if(tokenUtil.isValidToken(access_token)){
+                        filterChain.doFilter(request,response);
+                    }
                 }
             }
         }
+
+        filterChain.doFilter(request,response);
     }
 }

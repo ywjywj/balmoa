@@ -1,4 +1,4 @@
-package springproject.springfb.user;
+package springproject.springfb.member;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity(name="member")
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Member {
     //mysql 버전 문제로 다시 pull 할 예정.(5.7버전)
     //그래서 db 테이블에 관해서 고민. pk를 member_id로 할지 student_id로 할지(즉 member_id를 지울까 고민)
     //crud 측면에서 필요할거 같다고 생각하면 추가. 논의 필요. 그 후에 swagger 사용해서 확인해보는걸로.
