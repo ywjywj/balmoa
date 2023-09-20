@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "springproject.springfb")
-@EntityScan(basePackages = {"springproject.springfb.user","springproject.springfb.jwt.domain"})
+@EntityScan(basePackages = {"springproject.springfb.member","springproject.springfb.jwt.domain"})
 @EnableWebMvc
 public class SpringFbApplication {
 	public static void main(String[] args) {
