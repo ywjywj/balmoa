@@ -45,7 +45,6 @@ public class MemberController {
     })
     @PostMapping("/save")
     public ResponseEntity<Member> save(@RequestBody Member member){
-        log.debug("[fuck] : {}",member);
-        return new ResponseEntity<Member>(memberService.save(member), HttpStatus.OK);
+        return new ResponseEntity<>(memberService.save(member), HttpStatus.OK);
     }
 }

@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import springproject.springfb.jwt.domain.Token;
-import springproject.springfb.member.Member;
 
 
 import javax.crypto.spec.SecretKeySpec;

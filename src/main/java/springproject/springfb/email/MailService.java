@@ -31,19 +31,12 @@ public class MailService {
     }
     public SimpleMailMessage createMail(String email){
         ArrayList<String> toUserList = new ArrayList<>();
-
-//        toUserList.add("gmw0421@naver.com");
-//        toUserList.add("vcfdxzsa12@gmail.com");
-//        toUserList.add("21960029@st.yc.ac.kr");
-        //여러 유저들의 동시다발적인 호출에 의한 대처도 생각해야할듯.
         toUserList.add(email);
         int toUserSize = toUserList.size();
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         String code = createdCode();//난수로 생성해야함.
         simpleMailMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
-//        simpleMailMessage.setTo(address);
         simpleMailMessage.setSubject("Test Subject");
-//        simpleMailMessage.setFrom("풋살장 예약 어플");
         simpleMailMessage.setText("풋살장 인증 코드 : "+ code);
 
         redisUtil.setDataExpire(email,code,60*30L);
@@ -58,10 +51,6 @@ public class MailService {
         javaMailSender.send(simpleMailMessage);
     }
 
-//    public boolean verifyEmailCode(String email,String code) {
-//        if(email.isEmpty()&&code.isEmpty())return false;
-//        return true;
-//    }
     public Boolean verifyEmailCode(String email, String code) {
         String codeFoundByEmail = redisUtil.getData(email);
         if (codeFoundByEmail == null) {
