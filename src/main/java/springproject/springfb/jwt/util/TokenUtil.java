@@ -15,8 +15,6 @@ import java.util.*;
 @Slf4j
 @Component
 public class TokenUtil {
-
-
     private final String secretKey;
 
     public TokenUtil(@Value("${spring.jwt.secret}") String secretKey) {
@@ -24,16 +22,13 @@ public class TokenUtil {
         this.secretKey = secretKey;
     }
 
-
-
     public Token createToken(String id){
-
         //payload 부분에 학번을 기입하는게 괜찮을까? 아님 이 부분을 위해서 member_id를 사용해서 할까? 논의해보자.
         String access_token = Jwts.builder()
                 .setHeader(createHeader())
                 .setClaims(createClaims())
                 .setSubject(id)
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60)) // 토큰 만료 시간
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60)) // 토큰 만료 시간
                 .signWith(createSignature(),SignatureAlgorithm.HS256)
                 .compact();
 
@@ -45,7 +40,6 @@ public class TokenUtil {
                 .compact();
         */
         return new Token(id,access_token);
-
     }
 
     public Claims getClaims(String token){
@@ -56,22 +50,23 @@ public class TokenUtil {
                 .getBody();
     }
 
-    public boolean isValidToken(String token) {
-//        try {
-//            Claims claims = getClaims(token);
-//            return true;
-//        } catch (ExpiredJwtException exception) {
-//            log.error("Token Expired");
-//            return false;
-//        } catch (JwtException exception) {
-//            log.error("Token Tampered");
-//            return false;
-//        } catch (NullPointerException exception) {
-//            log.error("Token is null");
-//            return false;
-//        }
-        Claims claims = getClaims(token);
-        return true;
+    public boolean isValidToken(String token) throws UnsupportedJwtException{
+        try {
+            Claims claims = getClaims(token);
+            return true;
+        } catch (ExpiredJwtException exception) {
+            log.error("Token Expired");
+            throw new ExpiredJwtException(exception.getHeader(), exception.getClaims(),token);
+        } catch (MalformedJwtException exception) {
+            log.error("Token Tampered");
+            throw new MalformedJwtException("유효하지 않은 JWT 서명입니다.");
+        } catch (UnsupportedJwtException exception) {
+            log.error("Unsupported Token");
+            throw new UnsupportedJwtException("지원되지 않은 JWT 토큰입니다.");
+        } catch (IllegalArgumentException exception){
+            log.error("JWT claims is empty");
+            throw new IllegalArgumentException();
+        }
     }
 
 
