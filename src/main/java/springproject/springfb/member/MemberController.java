@@ -24,7 +24,7 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
-    @Operation(description = "현재 예약 현황을 조회 API")
+    @Operation(description = "현재 예약 현황을 조회 API",security = @SecurityRequirement(name = "bearer-key"))
     @ApiResponses({
             @ApiResponse(responseCode = "200",description = "success",
                content = @Content(array = @ArraySchema(schema = @Schema(implementation = Member.class))))

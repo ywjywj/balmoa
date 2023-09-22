@@ -17,8 +17,6 @@ public class Member {
     //그래서 db 테이블에 관해서 고민. pk를 member_id로 할지 student_id로 할지(즉 member_id를 지울까 고민)
     //crud 측면에서 필요할거 같다고 생각하면 추가. 논의 필요. 그 후에 swagger 사용해서 확인해보는걸로.
     @Id
-    private int memberId;
-
     @NotNull(message = "학번을 기입해주세요")
     private String studentId;
 

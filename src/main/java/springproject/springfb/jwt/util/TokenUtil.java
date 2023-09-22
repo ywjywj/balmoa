@@ -57,19 +57,21 @@ public class TokenUtil {
     }
 
     public boolean isValidToken(String token) {
-        try {
-            Claims claims = getClaims(token);
-            return true;
-        } catch (ExpiredJwtException exception) {
-            log.error("Token Expired");
-            return false;
-        } catch (JwtException exception) {
-            log.error("Token Tampered");
-            return false;
-        } catch (NullPointerException exception) {
-            log.error("Token is null");
-            return false;
-        }
+//        try {
+//            Claims claims = getClaims(token);
+//            return true;
+//        } catch (ExpiredJwtException exception) {
+//            log.error("Token Expired");
+//            return false;
+//        } catch (JwtException exception) {
+//            log.error("Token Tampered");
+//            return false;
+//        } catch (NullPointerException exception) {
+//            log.error("Token is null");
+//            return false;
+//        }
+        Claims claims = getClaims(token);
+        return true;
     }
 
 
