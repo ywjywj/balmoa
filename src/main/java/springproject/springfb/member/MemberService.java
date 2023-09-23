@@ -18,4 +18,7 @@ public class MemberService {
         memberRepository.save(member);
         return member;
     }
+//    public Member findById(String id){
+//        return memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no such data"));
+//    }
 }

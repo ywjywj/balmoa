@@ -27,13 +27,24 @@ public class MemberController {
     @Operation(description = "현재 예약 현황을 조회 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200",description = "success",
-               content = @Content(array = @ArraySchema(schema = @Schema(implementation = Member.class))))
+               content = {@Content( mediaType = "application/json" ,array = @ArraySchema(schema = @Schema(implementation = Member.class)))}),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST")
     })
     @GetMapping("")
+    @ExceptionHandler(value = NullPointerException.class)
     public ResponseEntity<List<Member>> GetAllMembers(){
+//        return ResponseEntity.ok(members);
         List<Member> members = memberService.findAll();
-        return ResponseEntity.ok(members);
+        if(members.isEmpty() || members == null){
+            log.info("===============null");
+            return new ResponseEntity<>(members, HttpStatus.BAD_REQUEST);
+        }else{
+            log.info("============not null");
+            return new ResponseEntity<>(members, HttpStatus.OK);
+        }
+
     }
+
 
     @Operation(description = "예약 신청 API",security = @SecurityRequirement(name = "bearer-key"))
     @ApiResponses({
