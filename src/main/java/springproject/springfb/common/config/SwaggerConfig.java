@@ -1,4 +1,4 @@
-package springproject.springfb.config;
+package springproject.springfb.common.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

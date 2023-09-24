@@ -50,19 +50,19 @@ public class TokenUtil {
                 .getBody();
     }
 
-    public boolean isValidToken(String token) throws UnsupportedJwtException{
+    public boolean isValidToken(String token) {
         try {
             Claims claims = getClaims(token);
             return true;
         } catch (ExpiredJwtException exception) {
             log.error("Token Expired");
             throw new ExpiredJwtException(exception.getHeader(), exception.getClaims(),token);
-        } catch (MalformedJwtException exception) {
+        } catch (SignatureException exception) {
             log.error("Token Tampered");
-            throw new MalformedJwtException("유효하지 않은 JWT 서명입니다.");
+            throw new SignatureException("유효하지 않은 JWT 서명입니다.");
         } catch (UnsupportedJwtException exception) {
             log.error("Unsupported Token");
-            throw new UnsupportedJwtException("지원되지 않은 JWT 토큰입니다.");
+            throw new UnsupportedJwtException("지원되지 않는 토큰입니다.");
         } catch (IllegalArgumentException exception){
             log.error("JWT claims is empty");
             throw new IllegalArgumentException();

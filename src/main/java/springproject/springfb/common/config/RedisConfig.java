@@ -1,4 +1,4 @@
-package springproject.springfb.config;
+package springproject.springfb.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
