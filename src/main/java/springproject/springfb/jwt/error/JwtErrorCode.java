@@ -14,6 +14,7 @@ public enum JwtErrorCode implements ErrorCode {
 
         private final HttpStatus status;
         private final String message;
+        // error code
 
         @Override
         public Integer getStatus() {

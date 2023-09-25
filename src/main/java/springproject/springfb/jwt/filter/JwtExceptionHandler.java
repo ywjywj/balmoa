@@ -1,6 +1,7 @@
 package springproject.springfb.jwt.filter;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
@@ -34,7 +35,7 @@ public class JwtExceptionHandler extends OncePerRequestFilter {
             errorResponse.setResponse(response,JwtErrorCode.Token_Tampered);
         } catch (UnsupportedJwtException exception){
             errorResponse.setResponse(response,JwtErrorCode.Token_Unsupported);
-        } catch (IllegalArgumentException exception){
+        } catch(MalformedJwtException | IllegalArgumentException exception){
             errorResponse.setResponse(response,JwtErrorCode.Token_Claims_Empty);
         } catch (ResponseStatusException exception){
             errorResponse.setResponse(response,JwtErrorCode.Token_isNull);

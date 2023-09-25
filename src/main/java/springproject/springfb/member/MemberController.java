@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 @Tag(name= "users", description = "예약 기능 API")
 @RestController
-@RequestMapping(value="/balmoa/users")
+@RequestMapping(value="/balmoa/members")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
@@ -28,7 +28,7 @@ public class MemberController {
     @ApiResponses({
             @ApiResponse(responseCode = "200",description = "success",
                content = @Content(array = @ArraySchema(schema = @Schema(implementation = Member.class))))
-    })
+    })      @ApiResponse(responseCode = "401",description = "인증 실패")
     @GetMapping("")
     public ResponseEntity<List<Member>> GetAllMembers(){
         List<Member> members = memberService.findAll();

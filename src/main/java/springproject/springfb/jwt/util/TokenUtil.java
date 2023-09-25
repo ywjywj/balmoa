@@ -1,12 +1,12 @@
 package springproject.springfb.jwt.util;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.SignatureException;
+import io.jsonwebtoken.security.WeakKeyException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import springproject.springfb.jwt.domain.Token;
-
-
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -29,7 +29,7 @@ public class TokenUtil {
                 .setClaims(createClaims())
                 .setSubject(id)
                 .setExpiration(new Date(System.currentTimeMillis() + 1000*60)) // 토큰 만료 시간
-                .signWith(createSignature(),SignatureAlgorithm.HS256)
+                .signWith(createSignature(), SignatureAlgorithm.HS256)
                 .compact();
 
         /*
@@ -60,12 +60,11 @@ public class TokenUtil {
         } catch (SignatureException exception) {
             log.error("Token Tampered");
             throw new SignatureException("유효하지 않은 JWT 서명입니다.");
-        } catch (UnsupportedJwtException exception) {
+        } catch (UnsupportedJwtException | WeakKeyException exception) {
             log.error("Unsupported Token");
             throw new UnsupportedJwtException("지원되지 않는 토큰입니다.");
-        } catch (IllegalArgumentException exception){
-            log.error("JWT claims is empty");
-            throw new IllegalArgumentException();
+        } catch (MalformedJwtException | IllegalArgumentException exception){
+            throw new MalformedJwtException("잘못된 형식의 토큰입니다.");
         }
     }
 
