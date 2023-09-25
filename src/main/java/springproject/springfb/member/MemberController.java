@@ -39,9 +39,7 @@ public class MemberController {
     @ApiResponses({
             @ApiResponse(responseCode = "200",description = "success",
                     content = @Content(schema = @Schema(implementation = Member.class))),
-            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
-            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR"),
     })
     @PostMapping("/save")
     public ResponseEntity<Member> save(@RequestBody Member member){
