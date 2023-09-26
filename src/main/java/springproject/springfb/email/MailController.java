@@ -24,18 +24,20 @@ public class MailController {
 
     @Operation(description = "이메일 인증을 위해 인증 코드 발급 API")
     @ApiResponses({
-            @ApiResponse(responseCode = "200",description = "OK")
+            @ApiResponse(responseCode = "200",description = "성공"),
+            @ApiResponse(responseCode = "500", description = "내부 서버 오류")
     })
     @PostMapping("")
     public ResponseEntity<String> sendEmailPath(@RequestBody String id) {
-        String email = id+"@st.yc.ac.kr";
+        String email = id + "@st.yc.ac.kr";
         mailService.sendMail(email);
         return ResponseEntity.ok("이메일을 확인하세요");
     }
 
     @Operation(description = "인증 코드 검증 및 토큰 발급 API")
     @ApiResponses({
-            @ApiResponse(responseCode = "200",description = "success")
+            @ApiResponse(responseCode = "200",description = "성공"),
+            @ApiResponse(responseCode = "500",description = "내부 서버 오류")
     })
     @PostMapping("/auth")
     public ResponseEntity<String> sendEmailAndCode(HttpServletResponse response,@RequestBody EmailDto emailDto){

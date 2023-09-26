@@ -30,6 +30,7 @@ public class JwtFilter extends OncePerRequestFilter {
         log.info("[JwtFilter - Request URL] : {}", request.getRequestURI());
         List<String> list = List.of(
                 "/swagger-ui/",
+                "/swagger-resources/",
                 "/v3/api-docs/",
                 "/balmoa/mail"
         );

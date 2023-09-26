@@ -13,11 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springproject.springfb.common.error.response.ErrorResponse;
 
 import java.util.List;
 
 @Slf4j
-@Tag(name= "users", description = "예약 기능 API")
+@Tag(name="members", description = "예약 기능 API")
 @RestController
 @RequestMapping(value="/balmoa/members")
 @RequiredArgsConstructor
@@ -27,8 +28,12 @@ public class MemberController {
     @Operation(description = "현재 예약 현황을 조회 API",security = @SecurityRequirement(name = "bearer-key"))
     @ApiResponses({
             @ApiResponse(responseCode = "200",description = "success",
-               content = @Content(array = @ArraySchema(schema = @Schema(implementation = Member.class))))
-    })      @ApiResponse(responseCode = "401",description = "인증 실패")
+               content = @Content(array = @ArraySchema(schema = @Schema(implementation = Member.class)))),
+            @ApiResponse(responseCode = "401",description = "인증 실패",
+                content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "500",description = "내부 서버 오류")
+    })
+
     @GetMapping("")
     public ResponseEntity<List<Member>> GetAllMembers(){
         List<Member> members = memberService.findAll();
@@ -37,9 +42,9 @@ public class MemberController {
 
     @Operation(description = "예약 신청 API",security = @SecurityRequirement(name = "bearer-key"))
     @ApiResponses({
-            @ApiResponse(responseCode = "200",description = "success",
-                    content = @Content(schema = @Schema(implementation = Member.class))),
-            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR"),
+            @ApiResponse(responseCode = "200",description = "성공"),
+            @ApiResponse(responseCode = "401",description = "인증 실패"),
+            @ApiResponse(responseCode = "500", description = "내부 서버 오류")
     })
     @PostMapping("/save")
     public ResponseEntity<Member> save(@RequestBody Member member){
