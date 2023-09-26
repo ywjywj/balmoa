@@ -27,7 +27,7 @@ public class MemberController {
 
     @Operation(description = "현재 예약 현황을 조회 API",security = @SecurityRequirement(name = "bearer-key"))
     @ApiResponses({
-            @ApiResponse(responseCode = "200",description = "success",
+            @ApiResponse(responseCode = "200",description = "성공",
                content = @Content(array = @ArraySchema(schema = @Schema(implementation = Member.class)))),
             @ApiResponse(responseCode = "401",description = "인증 실패",
                 content = @Content(schema = @Schema(implementation = ErrorResponse.class))),

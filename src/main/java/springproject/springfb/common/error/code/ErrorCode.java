@@ -1,4 +1,4 @@
-package springproject.springfb.common;
+package springproject.springfb.common.error.code;
 public interface ErrorCode {
 
     Integer getStatus();

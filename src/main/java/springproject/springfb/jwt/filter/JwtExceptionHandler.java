@@ -14,7 +14,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
-import springproject.springfb.common.error.response.ErrorResponse;
+import springproject.springfb.common.error.util.ErrorUtil;
 import springproject.springfb.jwt.error.JwtErrorCode;
 import java.io.IOException;
 
@@ -23,22 +23,22 @@ import java.io.IOException;
 @Component
 @Order(value = Integer.MIN_VALUE)
 public class JwtExceptionHandler extends OncePerRequestFilter {
-    private final ErrorResponse errorResponse;
+    private final ErrorUtil errorUtil;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("[JwtExceptionHandler - Request URL] : {}",request.getRequestURI());
         try {
             doFilter(request,response,filterChain);
         } catch (ExpiredJwtException exception){
-            errorResponse.setResponse(response, JwtErrorCode.Token_Expired);
+            errorUtil.setResponse(response, JwtErrorCode.Token_Expired);
         } catch (SignatureException exception){
-            errorResponse.setResponse(response,JwtErrorCode.Token_Tampered);
+            errorUtil.setResponse(response,JwtErrorCode.Token_Tampered);
         } catch (UnsupportedJwtException exception){
-            errorResponse.setResponse(response,JwtErrorCode.Token_Unsupported);
+            errorUtil.setResponse(response,JwtErrorCode.Token_Unsupported);
         } catch(MalformedJwtException | IllegalArgumentException exception){
-            errorResponse.setResponse(response,JwtErrorCode.Token_Claims_Empty);
+            errorUtil.setResponse(response,JwtErrorCode.Token_Claims_Empty);
         } catch (ResponseStatusException exception){
-            errorResponse.setResponse(response,JwtErrorCode.Token_isNull);
+            errorUtil.setResponse(response,JwtErrorCode.Token_isNull);
         }
     }
 }
