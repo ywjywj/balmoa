@@ -1,12 +1,12 @@
-package springproject.springfb.common.error.util;
+package springproject.springfb.common.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import springproject.springfb.common.error.code.ErrorCode;
-import springproject.springfb.common.error.response.ErrorResponse;
+import springproject.springfb.common.error.ErrorCode;
+import springproject.springfb.common.response.ErrorResponse;
 
 import java.io.IOException;
 

@@ -14,7 +14,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
-import springproject.springfb.common.error.util.ErrorUtil;
+import springproject.springfb.common.util.ErrorUtil;
 import springproject.springfb.jwt.error.JwtErrorCode;
 import java.io.IOException;
 

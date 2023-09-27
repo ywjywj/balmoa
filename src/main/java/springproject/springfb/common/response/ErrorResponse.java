@@ -1,7 +1,7 @@
-package springproject.springfb.common.error.response;
+package springproject.springfb.common.response;
 
 import lombok.Getter;
-import springproject.springfb.common.error.code.ErrorCode;
+import springproject.springfb.common.error.ErrorCode;
 
 @Getter
 public class ErrorResponse {

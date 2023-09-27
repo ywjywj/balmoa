@@ -2,7 +2,7 @@ package springproject.springfb.jwt.error;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import springproject.springfb.common.error.code.ErrorCode;
+import springproject.springfb.common.error.ErrorCode;
 
 @RequiredArgsConstructor
 public enum JwtErrorCode implements ErrorCode {
