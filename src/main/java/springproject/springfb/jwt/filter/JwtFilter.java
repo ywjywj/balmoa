@@ -29,14 +29,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
         log.info("[JwtFilter - Request URL] : {}", request.getRequestURI());
         List<String> list = List.of(
-                "/swagger-ui/",
-                "/swagger-resources/",
-                "/v3/api-docs/",
-                "/balmoa/mail"
+                "/balmoa/members"
         );
         boolean flag = list.stream().anyMatch(url -> request.getRequestURI().startsWith(url));
         // 현재 URL 이 LIST 안에 포함되있는걸로 시작되나?
-        if(flag) {
+        if(!flag) {
             filterChain.doFilter(request,response);
             return;
         }
