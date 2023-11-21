@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import springproject.springfb.common.response.ErrorResponse;
+import springproject.springfb.common.model.CommonApiResponse;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class MemberController {
             @ApiResponse(responseCode = "200",description = "성공",
                content = @Content(array = @ArraySchema(schema = @Schema(implementation = Member.class)))),
             @ApiResponse(responseCode = "401",description = "인증 실패",
-                content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                content = @Content(schema = @Schema(implementation = CommonApiResponse.class))),
             @ApiResponse(responseCode = "500",description = "내부 서버 오류")
     })
 

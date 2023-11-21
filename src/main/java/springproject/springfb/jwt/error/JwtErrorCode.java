@@ -2,10 +2,10 @@ package springproject.springfb.jwt.error;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import springproject.springfb.common.error.ErrorCode;
+import springproject.springfb.common.error.CommonError;
 
 @RequiredArgsConstructor
-public enum JwtErrorCode implements ErrorCode {
+public enum JwtErrorCode implements CommonError {
         Token_Expired(HttpStatus.UNAUTHORIZED,"토큰이 만료되었습니다."),
         Token_Unsupported(HttpStatus.UNAUTHORIZED,"지원하지 않는 토큰입니다."),
         Token_Tampered(HttpStatus.UNAUTHORIZED,"유효하지 않은 서명입니다."),
@@ -17,8 +17,8 @@ public enum JwtErrorCode implements ErrorCode {
         // error code
 
         @Override
-        public Integer getStatus() {
-                return this.status.value();
+        public HttpStatus getStatus() {
+                return this.status;
         }
 
         @Override
