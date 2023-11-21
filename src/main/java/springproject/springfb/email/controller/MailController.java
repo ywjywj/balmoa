@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springproject.springfb.email.model.AuthCodeRequest;
 import springproject.springfb.email.service.MailService;
-import springproject.springfb.email.model.EmailDto;
+import springproject.springfb.email.model.EmailAuthRequest;
 import springproject.springfb.jwt.application.service.TokenService;
 import springproject.springfb.jwt.domain.Token;
 
@@ -44,13 +44,13 @@ public class MailController {
             @ApiResponse(responseCode = "500",description = "내부 서버 오류")
     })
     @PostMapping("/auth")
-    public ResponseEntity<String> sendEmailAndCode(HttpServletResponse response,@RequestBody EmailDto emailDto){
-        log.debug("[Email dto] : {},{}",emailDto.getEmail(),emailDto.getCode());
-        if(mailService.verifyEmailCode(emailDto.getEmail(),emailDto.getCode())){
-            Token token = tokenService.saveToken(emailDto.getEmail().split("@")[0]);
+    public ResponseEntity<String> sendEmailAndCode(HttpServletResponse response,@RequestBody @Valid EmailAuthRequest emailAuthRequest){
+        log.debug("[Email dto] : {},{}", emailAuthRequest.getEmail(), emailAuthRequest.getCode());
+        if(mailService.verifyEmailCode(emailAuthRequest.getEmail(), emailAuthRequest.getCode())){
+            Token token = tokenService.saveToken(emailAuthRequest.getEmail().split("@")[0]);
              response.setHeader("Authorization", "Bearer " + token.getAccessToken());
             return ResponseEntity.ok("success");
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.badRequest().build();
     }
 }
