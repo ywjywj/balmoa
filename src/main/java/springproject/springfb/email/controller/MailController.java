@@ -1,14 +1,18 @@
-package springproject.springfb.email;
+package springproject.springfb.email.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springproject.springfb.email.model.AuthCodeRequest;
+import springproject.springfb.email.service.MailService;
+import springproject.springfb.email.model.EmailDto;
 import springproject.springfb.jwt.application.service.TokenService;
 import springproject.springfb.jwt.domain.Token;
 
@@ -28,9 +32,9 @@ public class MailController {
             @ApiResponse(responseCode = "500", description = "내부 서버 오류")
     })
     @PostMapping("")
-    public ResponseEntity<String> sendEmailPath(@RequestBody String id) {
-        String email = id + "@st.yc.ac.kr";
-        mailService.sendMail(email);
+    public ResponseEntity<String> sendEmailPath(@RequestBody @Valid AuthCodeRequest authCodeRequest) {
+        log.info("fuck : {}",authCodeRequest.getId());
+        mailService.sendMail(authCodeRequest.getId());
         return ResponseEntity.ok("이메일을 확인하세요");
     }
 

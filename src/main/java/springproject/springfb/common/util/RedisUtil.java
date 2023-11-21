@@ -1,4 +1,4 @@
-package springproject.springfb.email;
+package springproject.springfb.common.util;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;

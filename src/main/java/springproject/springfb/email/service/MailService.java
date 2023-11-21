@@ -1,10 +1,14 @@
-package springproject.springfb.email;
+package springproject.springfb.email.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import springproject.springfb.common.util.RedisUtil;
+import springproject.springfb.email.util.EmailUtil;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,6 +18,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class MailService {
 
+    private final EmailUtil emailUtil;
     private final JavaMailSender javaMailSender;
     private final RedisUtil redisUtil;
 
@@ -28,8 +33,10 @@ public class MailService {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)//collect(Stream의 자료형을 변환시켜준다.),appendCodePoint(int codePoint) : 해당 아스키코드의 character를 추가
                 .toString();
     }
-    public SimpleMailMessage createMail(String email){
+    public SimpleMailMessage createMail(String id){
         ArrayList<String> toUserList = new ArrayList<>();
+        String email = emailUtil.toEmail(id);
+
         toUserList.add(email);
         int toUserSize = toUserList.size();
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -47,7 +54,12 @@ public class MailService {
             redisUtil.deleteData(email);
         }
         SimpleMailMessage simpleMailMessage = createMail(email);
-        javaMailSender.send(simpleMailMessage);
+
+        try {
+            javaMailSender.send(simpleMailMessage);
+        } catch (MailException mailException) {
+            throw new RuntimeException(); // Exception 수정 해야함.
+        }
     }
 
     public Boolean verifyEmailCode(String email, String code) {

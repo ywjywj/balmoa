@@ -1,4 +1,4 @@
-package springproject.springfb.email;
+package springproject.springfb.email.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

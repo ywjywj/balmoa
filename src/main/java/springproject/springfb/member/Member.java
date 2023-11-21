@@ -39,5 +39,4 @@ public class Member {
     @Schema(description = "예약 시간")
     private int reservationTime;
 
-
 }
