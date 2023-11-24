@@ -5,15 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Schema(description = "사용자 DTO")
-@Data
 @Entity(name="member")
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
     //mysql 버전 문제로 다시 pull 할 예정.(5.7버전)
     //그래서 db 테이블에 관해서 고민. pk를 member_id로 할지 student_id로 할지(즉 member_id를 지울까 고민)

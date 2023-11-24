@@ -28,7 +28,7 @@ public class TokenUtil {
                 .setHeader(createHeader())
                 .setClaims(createClaims())
                 .setSubject(id)
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60)) // 토큰 만료 시간
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60*24)) // 토큰 만료 시간
                 .signWith(createSignature(), SignatureAlgorithm.HS256)
                 .compact();
 

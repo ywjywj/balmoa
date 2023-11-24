@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springproject.springfb.common.model.CommonApiResponse;
+import springproject.springfb.email.model.AuthCodeRequest;
 import springproject.springfb.member.model.Member;
 import springproject.springfb.member.service.MemberService;
 
@@ -52,5 +53,20 @@ public class MemberController {
     @PostMapping("/save")
     public ResponseEntity<Member> save(@RequestBody @Valid Member member){
         return new ResponseEntity<>(memberService.save(member), HttpStatus.OK);
+    }
+
+    @Operation(description = "예약 취소 API", security = @SecurityRequirement(name = "bearer-key"))
+    @PostMapping("cancel")
+    public ResponseEntity<?> cancel(@RequestBody @Valid AuthCodeRequest authCodeRequest){
+        boolean flag = memberService.cancel(authCodeRequest);
+
+        if(flag){
+            CommonApiResponse<Object> response = CommonApiResponse.builder()
+                    .code(HttpStatus.OK.value())
+                    .message("삭제 성공")
+                    .build();
+            return ResponseEntity.status(response.getCode()).body(response);
+        }
+        return null;
     }
 }
