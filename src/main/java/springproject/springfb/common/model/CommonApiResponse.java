@@ -9,7 +9,6 @@ import lombok.Getter;
 @Builder
 @Getter
 public class CommonApiResponse<T> {
-    private final int code;
-    private final String message;
-    private final T t;
+    private final Object message;
+    private final T data;
 }

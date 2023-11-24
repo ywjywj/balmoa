@@ -16,11 +16,10 @@ public class ErrorResponseCreateUtil {
     private final ObjectMapper objectMapper;
     public void setResponse(HttpServletResponse response, CommonError commonError) throws IOException {
         CommonApiResponse<Object> apiResponse = CommonApiResponse.builder()
-                .code(commonError.getStatus().value())
                 .message(commonError.getMessage())
                 .build();
 
-        response.setStatus(apiResponse.getCode());
+        response.setStatus(commonError.getStatus().value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
         response.getWriter()

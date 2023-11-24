@@ -39,9 +39,8 @@ public class MemberController {
     })
 
     @GetMapping("")
-    public ResponseEntity<List<Member>> GetAllMembers(){
-        List<Member> members = memberService.findAll();
-        return ResponseEntity.ok(members);
+    public List<Member> GetAllMembers(){
+        return memberService.findAll();
     }
 
     @Operation(description = "예약 신청 API",security = @SecurityRequirement(name = "bearer-key"))
@@ -51,22 +50,13 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "내부 서버 오류")
     })
     @PostMapping("/save")
-    public ResponseEntity<Member> save(@RequestBody @Valid Member member){
-        return new ResponseEntity<>(memberService.save(member), HttpStatus.OK);
+    public Member save(@RequestBody @Valid Member member){
+        return memberService.save(member);
     }
 
     @Operation(description = "예약 취소 API", security = @SecurityRequirement(name = "bearer-key"))
     @PostMapping("cancel")
-    public ResponseEntity<?> cancel(@RequestBody @Valid AuthCodeRequest authCodeRequest){
-        boolean flag = memberService.cancel(authCodeRequest);
-
-        if(flag){
-            CommonApiResponse<Object> response = CommonApiResponse.builder()
-                    .code(HttpStatus.OK.value())
-                    .message("삭제 성공")
-                    .build();
-            return ResponseEntity.status(response.getCode()).body(response);
-        }
-        return null;
+    public boolean cancel(@RequestBody @Valid AuthCodeRequest authCodeRequest){
+        return memberService.cancel(authCodeRequest);
     }
 }

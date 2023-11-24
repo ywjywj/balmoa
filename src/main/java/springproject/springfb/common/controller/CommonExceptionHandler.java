@@ -1,37 +1,43 @@
 package springproject.springfb.common.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.type.descriptor.java.ObjectJavaType;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import springproject.springfb.common.error.CommonError;
 import springproject.springfb.common.error.CommonErrorCode;
 import springproject.springfb.common.error.CommonException;
-import springproject.springfb.common.model.CommonApiResponse;
+import springproject.springfb.common.error.ValidErrorEntity;
+
+import java.util.List;
 
 @Slf4j
 @RestControllerAdvice
 public class CommonExceptionHandler {
     @ExceptionHandler(CommonException.class)
-    public ResponseEntity<CommonApiResponse<Object>> customExceptionHandler(CommonException commonException){
-        CommonError errorCode = commonException.getCommonError();
-        CommonApiResponse<Object> response = CommonApiResponse.builder()
-                .code(errorCode.getStatus().value())
-                .message(errorCode.getMessage())
-                .build();
-        return ResponseEntity.status(response.getCode()).body(response);
+    public CommonError customExceptionHandler(CommonException commonException){
+        return commonException.getCommonError();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<CommonApiResponse<Object>> validRequestParam(MethodArgumentNotValidException exception){
-        CommonApiResponse<Object> response = CommonApiResponse.builder()
-                .code(HttpStatus.BAD_REQUEST.value())
-                .message(exception.getBindingResult().getFieldError().getDefaultMessage())
+    public ValidErrorEntity validRequestParam(MethodArgumentNotValidException exception){
+        List<String> messages = exception.getBindingResult().getFieldErrors()
+                .stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .toList();
+
+        return ValidErrorEntity.builder()
+                .status(HttpStatus.NOT_FOUND)
+                .message(messages)
                 .build();
-        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public CommonError notFound(NoHandlerFoundException exception){
+        return CommonErrorCode.NOT_FOUND;
     }
 
 }

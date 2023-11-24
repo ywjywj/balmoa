@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+@Getter
 @Schema(description = "사용자 DTO")
 @Entity(name="member")
 @Builder
