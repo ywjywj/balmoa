@@ -1,7 +1,9 @@
-package springproject.springfb.member;
+package springproject.springfb.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import springproject.springfb.member.repository.MemberRepository;
+import springproject.springfb.member.model.Member;
 
 import java.util.List;
 

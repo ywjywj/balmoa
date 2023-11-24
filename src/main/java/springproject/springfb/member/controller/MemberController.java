@@ -1,4 +1,4 @@
-package springproject.springfb.member;
+package springproject.springfb.member.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springproject.springfb.common.model.CommonApiResponse;
+import springproject.springfb.member.model.Member;
+import springproject.springfb.member.service.MemberService;
 
 import java.util.List;
 

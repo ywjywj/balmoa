@@ -33,7 +33,6 @@ public class MailController {
     })
     @PostMapping("")
     public ResponseEntity<String> sendEmailPath(@RequestBody @Valid AuthCodeRequest authCodeRequest) {
-        log.info("fuck : {}",authCodeRequest.getId());
         mailService.sendMail(authCodeRequest.getId());
         return ResponseEntity.ok("이메일을 확인하세요");
     }
